@@ -1,0 +1,183 @@
+{% extends "log_sys.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-body">
+
+                    <h2 class="text-center mb-4">
+                        Изменение данных
+                    </h2>
+
+                    {% if message %}
+
+                    <div class="alert alert-danger">
+
+                        {{ message }}
+
+                    </div>
+
+                    {% endif %}
+
+                    <form method="post">
+
+                        {{ form.hidden_tag() }}
+
+                        <!-- ИМЯ -->
+
+                        <div class="form-check mb-3">
+
+                            {{ form.change_name(
+                                class="form-check-input",
+                                id="changeName"
+                            ) }}
+
+                            <label
+                                    class="form-check-label"
+                                    for="changeName"
+                            >
+                                Изменить имя
+                            </label>
+
+                        </div>
+
+                        <div
+                                id="nameField"
+                                style="display:none;"
+                                class="mb-3"
+                        >
+
+                            <label class="form-label">
+                                Новое имя
+                            </label>
+
+                            {{ form.new_name(
+                                class="form-control"
+                            ) }}
+
+                        </div>
+
+                        <!-- EMAIL -->
+
+                        <div class="form-check mb-3">
+
+                            {{ form.change_email(
+                                class="form-check-input",
+                                id="changeEmail"
+                            ) }}
+
+                            <label
+                                    class="form-check-label"
+                                    for="changeEmail"
+                            >
+                                Изменить email
+                            </label>
+
+                        </div>
+
+                        <div
+                                id="emailField"
+                                style="display:none;"
+                                class="mb-3"
+                        >
+
+                            <label class="form-label">
+                                Новый email
+                            </label>
+
+                            {{ form.new_email(
+                                class="form-control"
+                            ) }}
+
+                        </div>
+
+                        <!-- ПАРОЛЬ -->
+
+                        <div class="form-check mb-3">
+
+                            {{ form.change_password(
+                                class="form-check-input",
+                                id="changePassword"
+                            ) }}
+
+                            <label
+                                    class="form-check-label"
+                                    for="changePassword"
+                            >
+                                Изменить пароль
+                            </label>
+
+                        </div>
+
+                        <div
+                                id="passwordField"
+                                style="display:none;"
+                                class="mb-3"
+                        >
+
+                            <label class="form-label">
+                                Новый пароль
+                            </label>
+
+                            {{ form.new_password(
+                                class="form-control"
+                            ) }}
+
+                        </div>
+
+                        <div class="text-center">
+
+                            {{ form.submit(
+                                class="btn btn-primary"
+                            ) }}
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+document.getElementById("changeName")
+.addEventListener("change", function() {
+
+    document.getElementById("nameField")
+    .style.display =
+        this.checked ? "block" : "none";
+});
+
+document.getElementById("changeEmail")
+.addEventListener("change", function() {
+
+    document.getElementById("emailField")
+    .style.display =
+        this.checked ? "block" : "none";
+});
+
+document.getElementById("changePassword")
+.addEventListener("change", function() {
+
+    document.getElementById("passwordField")
+    .style.display =
+        this.checked ? "block" : "none";
+});
+
+</script>
+
+{% endblock %}
