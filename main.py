@@ -201,6 +201,11 @@ def main_menu():
     )
 
 
+@app.route('/')
+def index():
+    return redirect('/authorization')
+
+
 @app.route("/logout")
 @login_required
 def logout():
