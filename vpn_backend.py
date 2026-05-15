@@ -8,7 +8,7 @@ app = FastAPI()
 
 # НАСТРОЙКИ 3X-UI
 
-PANEL_URL = "http://144.31.121.80:47271"
+PANEL_URL = "http://127.0.0.1:47271"
 
 USERNAME = "admin"
 
