@@ -2,21 +2,128 @@
 
 {% block content %}
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<style>
 
-    <div class="container-fluid">
+    body {
+        background: #0f0f13;
+        color: white;
+        overflow-x: hidden;
+    }
 
-        <a class="navbar-brand fw-bold" href="#">
-            VPN Service
+    .gradient-text {
+        background: linear-gradient(90deg, #ff4fd8, #7a5cff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 24px;
+        transition: 0.3s;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 30px rgba(122, 92, 255, 0.25);
+    }
+
+    .hero-block {
+        padding-top: 120px;
+        padding-bottom: 100px;
+    }
+
+    .custom-input {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.08);
+        color: white;
+        border-radius: 16px;
+        padding: 14px;
+    }
+
+    .custom-input:focus {
+        background: rgba(255,255,255,0.1);
+        color: white;
+        border-color: #7a5cff;
+        box-shadow: none;
+    }
+
+    .btn-purple {
+        background: linear-gradient(90deg, #7a5cff, #ff4fd8);
+        border: none;
+        border-radius: 16px;
+        padding: 12px;
+        font-weight: 600;
+        color: white;
+        transition: 0.3s;
+    }
+
+    .btn-purple:hover {
+        opacity: 0.9;
+        transform: scale(1.02);
+    }
+
+    .section-title {
+        font-size: 48px;
+        font-weight: 800;
+    }
+
+    .table-dark-custom {
+        background: rgba(255,255,255,0.04);
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .table-dark-custom table {
+        color: white;
+    }
+
+    .table-dark-custom thead {
+        background: rgba(255,255,255,0.08);
+    }
+
+    .navbar-custom {
+        background: rgba(0,0,0,0.35);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .info-box {
+        background: rgba(255,255,255,0.05);
+        border-radius: 20px;
+        padding: 25px;
+        height: 100%;
+    }
+
+    .mini-label {
+        color: #b6b6c5;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .value-text {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-custom">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold fs-3 gradient-text" href="#">
+            VPN SERVICE
         </a>
 
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center gap-3">
 
-            <span class="text-white me-3">
+            <span class="text-light">
                 {{ current_user.name }}
             </span>
 
-            <a href="/logout" class="btn btn-danger">
+            <a href="/logout" class="btn btn-outline-light rounded-pill px-4">
                 Выйти
             </a>
 
@@ -26,118 +133,173 @@
 
 </nav>
 
-<div class="container mt-5">
+<div class="container hero-block">
 
     {% if message %}
 
-    <div class="alert alert-danger text-center">
-
+    <div class="alert alert-danger text-center rounded-4 mb-5">
         {{ message }}
-
     </div>
 
     {% endif %}
 
-    <!-- ЗАГОЛОВОК -->
+    <div class="row align-items-center mb-5">
 
-    <div class="text-center mb-5">
+        <div class="col-lg-7">
 
-        <h1 class="fw-bold">
-            Панель управления VPN и Proxy
-        </h1>
+            <h1 class="section-title mb-4">
+                Создавай
+                <span class="gradient-text">
+                    VPN и Proxy
+                </span>
+                нового поколения
+            </h1>
 
-    </div>
+            <p class="text-secondary fs-5">
+                Безопасное управление VPN ключами,
+                Telegram Proxy и персональными данными.
+            </p>
 
-    <!-- КАРТОЧКИ -->
+        </div>
 
-    <div class="row g-4">
+        <div class="col-lg-5">
 
-        <!-- VPN -->
+            <div class="glass-card p-4">
 
-        <div class="col-md-4">
+                <h4 class="mb-4 fw-bold">
+                    Быстрая статистика
+                </h4>
 
-            <div class="card shadow-lg border-0 h-100">
+                <div class="row g-3">
 
-                <div class="card-body">
+                    <div class="col-6">
 
-                    <h3 class="card-title text-center mb-4">
-                        VPN-ключ
-                    </h3>
+                        <div class="info-box text-center">
 
-                    <form method="post">
+                            <div class="mini-label">
+                                VPN ключей
+                            </div>
 
-                        <input
-                                type="hidden"
-                                name="action"
-                                value="create_vpn"
-                        >
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Введите имя ключа
-                            </label>
-
-                            <input
-                                    type="text"
-                                    name="vpn_name"
-                                    class="form-control"
-                                    placeholder="Например: MyVPN"
-                                    required
-                            >
-
-                        </div>
-
-                        <button
-                                type="submit"
-                                class="btn btn-primary w-100"
-                        >
-                            Создать VPN-ключ
-                        </button>
-
-                    </form>
-
-                    {% if vpn_key %}
-
-                    <div
-                            class="card border-primary mt-4"
-                            id="vpnCard"
-                    >
-
-                        <div class="card-body">
-
-                            <h5>
-                                Имя ключа:
-                                {{ vpn_key_name }}
-                            </h5>
-
-                            <div class="d-flex gap-2 mt-3">
-
-                                <button
-                                        class="btn btn-outline-primary"
-                                        type="button"
-                                        onclick="copyText('{{ vpn_key }}')"
-                                >
-                                    Скопировать
-                                </button>
-
-                                <button
-                                        class="btn btn-outline-danger"
-                                        type="button"
-                                        onclick="hideVpnCard()"
-                                >
-                                    Скрыть
-                                </button>
-
+                            <div class="value-text">
+                                {{ vpn_keys|length }}/2
                             </div>
 
                         </div>
 
                     </div>
 
-                    {% endif %}
+                    <div class="col-6">
+
+                        <div class="info-box text-center">
+
+                            <div class="mini-label">
+                                Proxy ключей
+                            </div>
+
+                            <div class="value-text">
+                                {{ proxy_keys|length }}/2
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row g-4 mb-5">
+
+        <!-- VPN -->
+
+        <div class="col-lg-6">
+
+            <div class="glass-card p-4 h-100">
+
+                <h3 class="fw-bold mb-4">
+                    VPN Ключ
+                </h3>
+
+                <form method="post">
+
+                    <input
+                            type="hidden"
+                            name="action"
+                            value="create_vpn"
+                    >
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Имя VPN ключа
+                        </label>
+
+                        <input
+                                type="text"
+                                name="vpn_name"
+                                class="form-control custom-input"
+                                placeholder="Например: MyPhone"
+                                required
+                        >
+
+                    </div>
+
+                    <button
+                            type="submit"
+                            class="btn btn-purple w-100"
+                    >
+                        Создать VPN ключ
+                    </button>
+
+                </form>
+
+                {% if vpn_key %}
+
+                <div class="glass-card mt-4 p-4" id="vpnCard">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <div class="mini-label">
+                                Создан VPN ключ
+                            </div>
+
+                            <div class="fw-bold fs-5">
+                                {{ vpn_key_name }}
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex gap-2">
+
+                            <button
+                                    class="btn btn-outline-light"
+                                    onclick="copyText('{{ vpn_key }}')"
+                                    type="button"
+                            >
+                                Скопировать
+                            </button>
+
+                            <button
+                                    class="btn btn-outline-danger"
+                                    type="button"
+                                    onclick="hideVpnCard()"
+                            >
+                                Скрыть
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
 
             </div>
 
@@ -145,214 +307,191 @@
 
         <!-- PROXY -->
 
-        <div class="col-md-4">
+        <div class="col-lg-6">
 
-            <div class="card shadow-lg border-0 h-100">
+            <div class="glass-card p-4 h-100">
 
-                <div class="card-body">
+                <h3 class="fw-bold mb-4">
+                    Proxy Telegram
+                </h3>
 
-                    <h3 class="card-title text-center mb-4">
-                        Proxy Telegram
-                    </h3>
+                <form method="post">
 
-                    <form method="post">
-
-                        <input
-                                type="hidden"
-                                name="action"
-                                value="create_proxy"
-                        >
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Введите сайт .ru
-                            </label>
-
-                            <input
-                                    type="text"
-                                    name="proxy_site"
-                                    class="form-control"
-                                    placeholder="example.ru"
-                                    pattern=".*\.ru$"
-                                    required
-                            >
-
-                        </div>
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Имя ключа
-                            </label>
-
-                            <input
-                                    type="text"
-                                    name="proxy_name"
-                                    class="form-control"
-                                    placeholder="Например: TGProxy"
-                                    required
-                            >
-
-                        </div>
-
-                        <button
-                                type="submit"
-                                class="btn btn-success w-100"
-                        >
-                            Создать Proxy
-                        </button>
-
-                    </form>
-
-                    {% if proxy_key %}
-
-                    <div
-                            class="card border-success mt-4"
-                            id="proxyCard"
+                    <input
+                            type="hidden"
+                            name="action"
+                            value="create_proxy"
                     >
 
-                        <div class="card-body">
+                    <div class="mb-3">
 
-                            <h5>
-                                Имя ключа:
+                        <label class="form-label">
+                            Сайт маскировки
+                        </label>
+
+                        <select
+                                name="proxy_site"
+                                class="form-select custom-input"
+                                required
+                        >
+
+                            <option value="">
+                                Выберите сайт
+                            </option>
+
+                            {% for site in proxy_sites %}
+
+                            <option value="{{ site }}">
+                                {{ site }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Имя Proxy
+                        </label>
+
+                        <input
+                                type="text"
+                                name="proxy_name"
+                                class="form-control custom-input"
+                                placeholder="Например: Telegram"
+                                required
+                        >
+
+                    </div>
+
+                    <button
+                            type="submit"
+                            class="btn btn-purple w-100"
+                    >
+                        Создать Proxy
+                    </button>
+
+                </form>
+
+                {% if proxy_key %}
+
+                <div class="glass-card mt-4 p-4" id="proxyCard">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <div class="mini-label">
+                                Создан Proxy ключ
+                            </div>
+
+                            <div class="fw-bold fs-5">
                                 {{ proxy_key_name }}
-                            </h5>
+                            </div>
 
-                            <p class="text-muted">
-                                Сайт:
+                            <div class="text-secondary mt-1">
                                 {{ proxy_site }}
-                            </p>
-
-                            <div class="d-flex gap-2 mt-3">
-
-                                <button
-                                        class="btn btn-outline-success"
-                                        type="button"
-                                        onclick="copyText('{{ proxy_key }}')"
-                                >
-                                    Скопировать
-                                </button>
-
-                                <button
-                                        class="btn btn-outline-danger"
-                                        type="button"
-                                        onclick="hideProxyCard()"
-                                >
-                                    Скрыть
-                                </button>
-
                             </div>
 
                         </div>
 
+                        <div class="d-flex gap-2">
+
+                            <button
+                                    class="btn btn-outline-light"
+                                    onclick="copyText('{{ proxy_key }}')"
+                                    type="button"
+                            >
+                                Скопировать
+                            </button>
+
+                            <button
+                                    class="btn btn-outline-danger"
+                                    type="button"
+                                    onclick="hideProxyCard()"
+                            >
+                                Скрыть
+                            </button>
+
+                        </div>
+
                     </div>
 
-                    {% endif %}
-
                 </div>
+
+                {% endif %}
 
             </div>
 
         </div>
 
-        <!-- ИНФОРМАЦИЯ -->
+        <!-- ЛИЧНАЯ ИНФОРМАЦИЯ -->
 
-        <div class="col-md-4">
+        <div class="glass-card p-5 mb-5">
 
-            <div class="card shadow-lg border-0 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-5">
 
-                <div class="card-body d-flex flex-column justify-content-center">
+                <h2 class="fw-bold mb-0">
+                    Личная информация
+                </h2>
 
-                    <h3 class="card-title text-center mb-4">
-                        Вся информация
-                    </h3>
-
-                    <a
-                            href="#all_keys"
-                            class="btn btn-dark w-100"
-                    >
-                        Перейти к информации
-                    </a>
-
-                </div>
+                <a href="/edit_profile" class="btn btn-purple px-4">
+                    Изменить данные
+                </a>
 
             </div>
 
-        </div>
-
-    </div>
-
-    <!-- ЛИЧНАЯ ИНФОРМАЦИЯ -->
-
-    <div class="card shadow-lg border-0 mt-5">
-
-        <div class="card-body">
-
-            <h2 class="mb-4 text-center">
-                Личная информация
-            </h2>
-
-            <div class="row">
-
-                <!-- ИМЯ -->
+            <div class="row g-4">
 
                 <div class="col-md-4">
 
-                    <div class="alert alert-primary">
+                    <div class="info-box">
 
-                        <h5>
+                        <div class="mini-label">
                             Имя пользователя
-                        </h5>
+                        </div>
 
-                        <hr>
-
-                        <p class="mb-0">
+                        <div class="value-text">
                             {{ current_user.name }}
-                        </p>
+                        </div>
 
                     </div>
 
                 </div>
 
-                <!-- EMAIL -->
-
                 <div class="col-md-4">
 
-                    <div class="alert alert-success">
+                    <div class="info-box">
 
-                        <h5>
+                        <div class="mini-label">
                             Email
-                        </h5>
+                        </div>
 
-                        <hr>
-
-                        <p class="mb-0">
+                        <div class="value-text">
                             {{ current_user.email }}
-                        </p>
+                        </div>
 
                     </div>
 
                 </div>
 
-                <!-- ПАРОЛЬ -->
-
                 <div class="col-md-4">
 
-                    <div class="alert alert-dark">
+                    <div class="info-box">
 
-                        <h5>
+                        <div class="mini-label">
                             Пароль
-                        </h5>
+                        </div>
 
-                        <hr>
-
-                        <div class="input-group">
+                        <div class="input-group mt-2">
 
                             <input
                                     type="password"
                                     id="passwordField"
-                                    class="form-control"
+                                    class="form-control custom-input"
                                     value="{{ current_user.hashed_password }}"
                                     readonly
                             >
@@ -373,53 +512,37 @@
 
             </div>
 
-            <div class="text-center mt-4">
-
-                <a
-                        href="/edit_profile"
-                        class="btn btn-warning"
-                >
-                    Изменить данные
-                </a>
-
-            </div>
-
         </div>
 
-    </div>
+        <!-- ВСЕ КЛЮЧИ -->
 
-    <!-- ВСЕ КЛЮЧИ -->
+        <div class="glass-card p-5 mb-5">
 
-    <div
-            id="all_keys"
-            class="mt-5"
-    >
+            <h2 class="fw-bold mb-5 text-center">
+                Все ключи пользователя
+            </h2>
 
-        <div class="card shadow-lg border-0">
+            <!-- VPN TABLE -->
 
-            <div class="card-body">
+            <div class="table-dark-custom mb-5 p-3">
 
-                <h2 class="text-center mb-5">
-                    Все ключи пользователя
-                </h2>
+                <h4 class="mb-4 fw-bold">
+                    VPN ключи
+                </h4>
 
-                <!-- VPN -->
+                <div class="table-responsive">
 
-                <div class="mb-5">
+                    <table class="table align-middle">
 
-                    <h4 class="text-primary mb-3">
-                        VPN-ключи
-                    </h4>
-
-                    <table class="table table-striped table-hover">
-
-                        <thead class="table-dark">
+                        <thead>
 
                         <tr>
 
                             <th>ID</th>
 
-                            <th>Имя ключа</th>
+                            <th>Имя</th>
+
+                            <th>Дата</th>
 
                             <th>Действия</th>
 
@@ -435,15 +558,19 @@
 
                             <td>{{ key.id }}</td>
 
-                            <td>{{ key.name }}</td>
+                            <td>{{ key.key_name }}</td>
+
+                            <td>
+                                {{ key.created_date.strftime("%d.%m.%Y") }}
+                            </td>
 
                             <td>
 
                                 <div class="d-flex gap-2">
 
                                     <button
-                                            class="btn btn-primary btn-sm"
-                                            onclick="copyText('{{ key.key }}')"
+                                            class="btn btn-outline-light btn-sm"
+                                            onclick="copyText('{{ key.vpn_key }}')"
                                     >
                                         Скопировать
                                     </button>
@@ -464,11 +591,8 @@
 
                                         <button
                                                 type="submit"
-                                                class="btn btn-danger btn-sm"
-                                                onclick="
-                                                return confirm(
-                                                'Вы точно хотите удалить VPN ключ?'
-                                                )"
+                                                class="btn btn-outline-danger btn-sm"
+                                                onclick="return confirm('Удалить VPN ключ?')"
                                         >
                                             Удалить
                                         </button>
@@ -489,17 +613,21 @@
 
                 </div>
 
-                <!-- PROXY -->
+            </div>
 
-                <div>
+            <!-- PROXY TABLE -->
 
-                    <h4 class="text-success mb-3">
-                        Proxy Telegram
-                    </h4>
+            <div class="table-dark-custom p-3">
 
-                    <table class="table table-striped table-hover">
+                <h4 class="mb-4 fw-bold">
+                    Proxy ключи
+                </h4>
 
-                        <thead class="table-dark">
+                <div class="table-responsive">
+
+                    <table class="table align-middle">
+
+                        <thead>
 
                         <tr>
 
@@ -507,7 +635,9 @@
 
                             <th>Сайт</th>
 
-                            <th>Имя ключа</th>
+                            <th>Имя</th>
+
+                            <th>Дата</th>
 
                             <th>Действия</th>
 
@@ -523,17 +653,21 @@
 
                             <td>{{ key.id }}</td>
 
-                            <td>{{ key.site }}</td>
+                            <td>{{ key.proxy_site }}</td>
 
-                            <td>{{ key.name }}</td>
+                            <td>{{ key.key_name }}</td>
+
+                            <td>
+                                {{ key.created_date.strftime("%d.%m.%Y") }}
+                            </td>
 
                             <td>
 
                                 <div class="d-flex gap-2">
 
                                     <button
-                                            class="btn btn-success btn-sm"
-                                            onclick="copyText('{{ key.key }}')"
+                                            class="btn btn-outline-light btn-sm"
+                                            onclick="copyText('{{ key.proxy_key }}')"
                                     >
                                         Скопировать
                                     </button>
@@ -554,11 +688,8 @@
 
                                         <button
                                                 type="submit"
-                                                class="btn btn-danger btn-sm"
-                                                onclick="
-                                                return confirm(
-                                                'Вы точно хотите удалить Proxy ключ?'
-                                                )"
+                                                class="btn btn-outline-danger btn-sm"
+                                                onclick="return confirm('Удалить Proxy ключ?')"
                                         >
                                             Удалить
                                         </button>
@@ -585,46 +716,44 @@
 
     </div>
 
-</div>
+    <script>
 
-<script>
+        function togglePassword() {
 
-function togglePassword() {
+            const passwordField =
+                document.getElementById("passwordField");
 
-    const passwordField =
-        document.getElementById("passwordField");
+            if (passwordField.type === "password") {
 
-    if (passwordField.type === "password") {
+                passwordField.type = "text";
 
-        passwordField.type = "text";
+            } else {
 
-    } else {
+                passwordField.type = "password";
+            }
+        }
 
-        passwordField.type = "password";
-    }
-}
+        function copyText(text) {
 
-function copyText(text) {
+            navigator.clipboard.writeText(text);
 
-    navigator.clipboard.writeText(text);
+            alert("Ключ скопирован");
+        }
 
-    alert("Ключ скопирован");
-}
+        function hideVpnCard() {
 
-function hideVpnCard() {
+            document.getElementById(
+                "vpnCard"
+            ).style.display = "none";
+        }
 
-    document.getElementById(
-        "vpnCard"
-    ).style.display = "none";
-}
+        function hideProxyCard() {
 
-function hideProxyCard() {
+            document.getElementById(
+                "proxyCard"
+            ).style.display = "none";
+        }
 
-    document.getElementById(
-        "proxyCard"
-    ).style.display = "none";
-}
+    </script>
 
-</script>
-
-{% endblock %}
+    {% endblock %}

@@ -4,63 +4,74 @@
 
 <div class="container d-flex justify-content-center align-items-center vh-100">
 
-    <div class="card shadow-lg p-4" style="width: 400px;">
+    <div
+            class="glass-card p-5 shadow-lg"
+            style="width: 430px;"
+    >
 
-        <h2 class="text-center mb-4">
-            Авторизация
-        </h2>
+        <div class="text-center mb-4">
+
+            <h1 class="fw-bold gradient-text">
+                VPN SERVICE
+            </h1>
+
+            <p class="text-secondary mt-3">
+                Авторизация в систему
+            </p>
+
+        </div>
 
         {% if message %}
-        <div class="alert alert-danger text-center">
+
+        <div class="alert alert-danger text-center rounded-4">
+
             {{ message }}
+
         </div>
+
         {% endif %}
 
         <form method="post">
 
             {{ form.hidden_tag() }}
 
-            <div class="form-floating mb-3">
+            <div class="form-floating mb-4">
 
-                {{ form.email(class="form-control", placeholder="Email") }}
+                {{ form.email(
+                    class="form-control custom-input",
+                    placeholder="Email"
+                ) }}
 
                 <label>Email</label>
 
-                {% for error in form.email.errors %}
-                    <div class="alert alert-danger mt-2">
-                        {{ error }}
-                    </div>
-                {% endfor %}
-
             </div>
 
-            <div class="form-floating mb-3">
+            <div class="form-floating mb-4">
 
-                {{ form.password(class="form-control", placeholder="Пароль") }}
+                {{ form.password(
+                    class="form-control custom-input",
+                    placeholder="Пароль"
+                ) }}
 
                 <label>Пароль</label>
 
-                {% for error in form.password.errors %}
-                    <div class="alert alert-danger mt-2">
-                        {{ error }}
-                    </div>
-                {% endfor %}
+            </div>
+
+            <div class="mt-4">
+
+                {{ form.submit(
+                    class="btn btn-purple w-100"
+                ) }}
 
             </div>
 
-            <div class="mt-3">
-
-                {{ form.submit(class="btn btn-primary w-100") }}
-
-            </div>
-
-            <div class="text-center mt-3">
+            <div class="text-center mt-4">
 
                 <a
                         href="/registration"
-                        class="btn btn-outline-secondary w-100"
+                        class="btn btn-outline-light w-100 rounded-4"
                 >
-                    Зарегистрироваться
+                    Регистрация
                 </a>
 
             </div>

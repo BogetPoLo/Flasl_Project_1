@@ -2,147 +2,142 @@
 
 {% block content %}
 
-<div class="container mt-5">
+<div class="container py-5">
 
     <div class="row justify-content-center">
 
-        <div class="col-md-8">
+        <div class="col-lg-7">
 
-            <div class="card shadow-lg border-0">
+            <div class="glass-card p-5">
 
-                <div class="card-body">
+                <div class="text-center mb-5">
 
-                    <h2 class="text-center mb-4">
-                        Изменение данных
-                    </h2>
+                    <h1 class="fw-bold gradient-text">
+                        Изменение профиля
+                    </h1>
 
-                    {% if message %}
+                    <p class="text-secondary mt-3">
+                        Управление личными данными
+                    </p>
 
-                    <div class="alert alert-danger">
+                </div>
 
-                        {{ message }}
+                {% if message %}
+
+                <div class="alert alert-danger rounded-4">
+
+                    {{ message }}
+
+                </div>
+
+                {% endif %}
+
+                <form method="post">
+
+                    {{ form.hidden_tag() }}
+
+                    <!-- ИМЯ -->
+
+                    <div class="form-check mb-3">
+
+                        {{ form.change_name(
+                            class="form-check-input",
+                            id="changeName"
+                        ) }}
+
+                        <label
+                                class="form-check-label"
+                                for="changeName"
+                        >
+                            Изменить имя
+                        </label>
 
                     </div>
 
-                    {% endif %}
+                    <div
+                            id="nameField"
+                            style="display:none;"
+                            class="mb-4"
+                    >
 
-                    <form method="post">
+                        {{ form.new_name(
+                            class="form-control custom-input",
+                            placeholder="Новое имя"
+                        ) }}
 
-                        {{ form.hidden_tag() }}
+                    </div>
 
-                        <!-- ИМЯ -->
+                    <!-- EMAIL -->
 
-                        <div class="form-check mb-3">
+                    <div class="form-check mb-3">
 
-                            {{ form.change_name(
-                                class="form-check-input",
-                                id="changeName"
-                            ) }}
+                        {{ form.change_email(
+                            class="form-check-input",
+                            id="changeEmail"
+                        ) }}
 
-                            <label
-                                    class="form-check-label"
-                                    for="changeName"
-                            >
-                                Изменить имя
-                            </label>
-
-                        </div>
-
-                        <div
-                                id="nameField"
-                                style="display:none;"
-                                class="mb-3"
+                        <label
+                                class="form-check-label"
+                                for="changeEmail"
                         >
+                            Изменить email
+                        </label>
 
-                            <label class="form-label">
-                                Новое имя
-                            </label>
+                    </div>
 
-                            {{ form.new_name(
-                                class="form-control"
-                            ) }}
+                    <div
+                            id="emailField"
+                            style="display:none;"
+                            class="mb-4"
+                    >
 
-                        </div>
+                        {{ form.new_email(
+                            class="form-control custom-input",
+                            placeholder="Новый email"
+                        ) }}
 
-                        <!-- EMAIL -->
+                    </div>
 
-                        <div class="form-check mb-3">
+                    <!-- PASSWORD -->
 
-                            {{ form.change_email(
-                                class="form-check-input",
-                                id="changeEmail"
-                            ) }}
+                    <div class="form-check mb-3">
 
-                            <label
-                                    class="form-check-label"
-                                    for="changeEmail"
-                            >
-                                Изменить email
-                            </label>
+                        {{ form.change_password(
+                            class="form-check-input",
+                            id="changePassword"
+                        ) }}
 
-                        </div>
-
-                        <div
-                                id="emailField"
-                                style="display:none;"
-                                class="mb-3"
+                        <label
+                                class="form-check-label"
+                                for="changePassword"
                         >
+                            Изменить пароль
+                        </label>
 
-                            <label class="form-label">
-                                Новый email
-                            </label>
+                    </div>
 
-                            {{ form.new_email(
-                                class="form-control"
-                            ) }}
+                    <div
+                            id="passwordField"
+                            style="display:none;"
+                            class="mb-5"
+                    >
 
-                        </div>
+                        {{ form.new_password(
+                            class="form-control custom-input",
+                            placeholder="Новый пароль"
+                        ) }}
 
-                        <!-- ПАРОЛЬ -->
+                    </div>
 
-                        <div class="form-check mb-3">
+                    <div class="text-center">
 
-                            {{ form.change_password(
-                                class="form-check-input",
-                                id="changePassword"
-                            ) }}
+                        {{ form.submit(
+                            class="btn btn-purple px-5"
+                        ) }}
 
-                            <label
-                                    class="form-check-label"
-                                    for="changePassword"
-                            >
-                                Изменить пароль
-                            </label>
+                    </div>
 
-                        </div>
-
-                        <div
-                                id="passwordField"
-                                style="display:none;"
-                                class="mb-3"
-                        >
-
-                            <label class="form-label">
-                                Новый пароль
-                            </label>
-
-                            {{ form.new_password(
-                                class="form-control"
-                            ) }}
-
-                        </div>
-
-                        <div class="text-center">
-
-                            {{ form.submit(
-                                class="btn btn-primary"
-                            ) }}
-
-                        </div>
-
-                    </form>
-
-                </div>
+                </form>
 
             </div>
 

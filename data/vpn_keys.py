@@ -1,40 +1,36 @@
-import datetime
+from sqlalchemy import Column
+from sqlalchemy import Integer
+from sqlalchemy import String
+from sqlalchemy import DateTime
+from sqlalchemy import ForeignKey
 
-import sqlalchemy
+from datetime import datetime
 
-from sqlalchemy import orm
-
-from .db_session import SqlAlchemyBase
+from data.db_session import SqlAlchemyBase
 
 
 class VpnKey(SqlAlchemyBase):
 
-    __tablename__ = 'vpn_keys'
+    __tablename__ = "vpn_keys"
 
-    id = sqlalchemy.Column(
-        sqlalchemy.Integer,
+    id = Column(
+        Integer,
         primary_key=True,
         autoincrement=True
     )
 
-    user_id = sqlalchemy.Column(
-        sqlalchemy.Integer,
-        sqlalchemy.ForeignKey("users.id")
+    user_id = Column(
+        Integer,
+        ForeignKey("users.id")
     )
 
-    key_name = sqlalchemy.Column(
-        sqlalchemy.String,
-        nullable=False
-    )
+    key_name = Column(String)
 
-    vpn_key = sqlalchemy.Column(
-        sqlalchemy.String,
-        nullable=False
-    )
+    vpn_key = Column(String)
 
-    created_date = sqlalchemy.Column(
-        sqlalchemy.DateTime,
-        default=datetime.datetime.now
-    )
+    client_id = Column(String)
 
-    user = orm.relationship('User')
+    created_date = Column(
+        DateTime,
+        default=datetime.utcnow
+    )

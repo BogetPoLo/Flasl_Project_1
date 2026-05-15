@@ -18,6 +18,8 @@ from Log_in_to_the_system import registration
 from Log_in_to_the_system import authorization
 from Log_in_to_the_system import edit_profile
 
+import requests
+
 
 app = Flask(__name__)
 
@@ -75,7 +77,9 @@ def main_menu():
 
         action = request.form.get("action")
 
+        # =========================
         # СОЗДАНИЕ VPN
+        # =========================
 
         if action == "create_vpn":
 
@@ -109,21 +113,50 @@ def main_menu():
 
                 elif vpn_key_name:
 
-                    vpn_key = "VPN-ключ"
+                    try:
 
-                    new_vpn_key = VpnKey()
+                        response = requests.post(
+                            "http://144.31.121.80:5001/create_vpn",
+                            json={
+                                "key_name": vpn_key_name
+                            }
+                        )
 
-                    new_vpn_key.user_id = current_user.id
+                        data = response.json()
 
-                    new_vpn_key.key_name = vpn_key_name
+                        if "error" in data:
 
-                    new_vpn_key.vpn_key = vpn_key
+                            message = data["error"]
 
-                    db_sess.add(new_vpn_key)
+                        else:
 
-                    db_sess.commit()
+                            vpn_key = data["vpn_key"]
 
+                            client_id = data["client_id"]
+
+                            new_vpn_key = VpnKey()
+
+                            new_vpn_key.user_id = current_user.id
+
+                            new_vpn_key.key_name = vpn_key_name
+
+                            new_vpn_key.vpn_key = vpn_key
+
+                            new_vpn_key.client_id = client_id
+
+                            db_sess.add(new_vpn_key)
+
+                            db_sess.commit()
+
+                    except:
+
+                        message = (
+                            "Backend сервер недоступен"
+                        )
+
+        # =========================
         # СОЗДАНИЕ PROXY
+        # =========================
 
         elif action == "create_proxy":
 
@@ -187,7 +220,9 @@ def main_menu():
                         "Сайт должен заканчиваться на .ru"
                     )
 
+        # =========================
         # УДАЛЕНИЕ VPN
+        # =========================
 
         elif action == "delete_vpn":
 
@@ -202,11 +237,23 @@ def main_menu():
 
             if vpn_delete:
 
+                try:
+
+                    requests.delete(
+                        f"http://144.31.121.80:5001/delete_vpn/{vpn_delete.client_id}"
+                    )
+
+                except:
+
+                    pass
+
                 db_sess.delete(vpn_delete)
 
                 db_sess.commit()
 
+        # =========================
         # УДАЛЕНИЕ PROXY
+        # =========================
 
         elif action == "delete_proxy":
 
@@ -260,7 +307,10 @@ def main():
 
     db_session.global_init("db/blogs.db")
 
-    app.run()
+    app.run(
+        host="0.0.0.0",
+        port=5000
+    )
 
 
 if __name__ == '__main__':
