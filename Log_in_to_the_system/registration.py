@@ -1,20 +1,12 @@
-from flask import render_template
-from flask import redirect
-from flask import Blueprint
+from flask import render_template, redirect, Blueprint
 
 from flask_wtf import FlaskForm
 
-from wtforms import StringField
-from wtforms import EmailField
-from wtforms import PasswordField
-from wtforms import SubmitField
+from wtforms import StringField, EmailField, PasswordField, SubmitField
 
-from wtforms.validators import DataRequired
-from wtforms.validators import Length
-from wtforms.validators import Email
+from wtforms.validators import DataRequired, Length, Email
 
-from data import db_session
-from data import user
+from data import db_session, user
 
 
 reg = Blueprint("registration", __name__)

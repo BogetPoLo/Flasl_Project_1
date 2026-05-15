@@ -1,39 +1,23 @@
-from flask import Blueprint
-from flask import render_template
-from flask import redirect
+from flask import Blueprint, render_template, redirect
 
-from flask_login import login_required
-from flask_login import current_user
+from flask_login import login_required, current_user
 
 from flask_wtf import FlaskForm
 
-from wtforms import StringField
-from wtforms import EmailField
-from wtforms import PasswordField
-from wtforms import BooleanField
-from wtforms import SubmitField
+from wtforms import StringField, EmailField, PasswordField, BooleanField, SubmitField
 
-from wtforms.validators import DataRequired
-from wtforms.validators import Length
-from wtforms.validators import Email
-from wtforms.validators import Optional
+from wtforms.validators import DataRequired, Length, Email, Optional
 
-from data import db_session
-from data import user
+from data import db_session, user
 
 
-edit_profile_blueprint = Blueprint(
-    "edit_profile",
-    __name__
-)
+edit_profile_blueprint = Blueprint("edit_profile", __name__)
 
 
 class EditProfileForm(FlaskForm):
 
     change_name = BooleanField("Изменить имя")
-
     change_email = BooleanField("Изменить email")
-
     change_password = BooleanField("Изменить пароль")
 
     new_name = StringField(
@@ -81,7 +65,6 @@ def edit_profile():
         # Проверка имени
 
         if form.change_name.data:
-
             if not form.new_name.data:
 
                 return render_template(
@@ -95,7 +78,6 @@ def edit_profile():
         # Проверка email
 
         if form.change_email.data:
-
             if not form.new_email.data:
 
                 return render_template(
@@ -109,7 +91,6 @@ def edit_profile():
         # Проверка пароля
 
         if form.change_password.data:
-
             if not form.new_password.data:
 
                 return render_template(
@@ -119,7 +100,6 @@ def edit_profile():
                 )
 
             current_db_user.hashed_password = form.new_password.data
-
         db_sess.commit()
 
         return redirect("/main_menu")

@@ -1,8 +1,4 @@
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import DateTime
-from sqlalchemy import ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 
 from datetime import datetime
 
@@ -25,9 +21,7 @@ class VpnKey(SqlAlchemyBase):
     )
 
     key_name = Column(String)
-
     vpn_key = Column(String)
-
     client_id = Column(String)
 
     created_date = Column(
